@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production PORT=80 node app",
+    "start": "cross-env NODE_ENV=production PORT=3001 node app",
     "dev": "nodemon app"
   },
   "keywords": [],
