@@ -1,0 +1,1 @@
+- 배포 url : https://port-0-trendroom-backend-2aat2cluqqq264.sel5.cloudtype.app
