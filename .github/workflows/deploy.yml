@@ -1,0 +1,42 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: sanbondeveloper/trendroom-backend
+          stage: main
+          yaml: |
+            name: trendroom-backend
+            app: node@18
+            options:
+              env:
+                - name: NODE_ENV
+                  value: production
+                - name: COOKIE_SECRET
+                  value: cookiesecret
+                - name: JWT_SECRET
+                  value: jwtSecret
+                - name: MONGO_URI
+                  value: mongodb://yordle:1234@mongo:27017/admin
+              ports: "3001"
+              install: npm ci --production
+              start: node app.js
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
