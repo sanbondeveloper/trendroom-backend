@@ -40,7 +40,7 @@ exports.login = async (req, res, next) => {
           {
             _id: exUser._id,
             email: exUser.email,
-            nick: exUser.nicl,
+            nick: exUser.nick,
           },
           process.env.JWT_SECRET,
           {
@@ -63,6 +63,44 @@ exports.login = async (req, res, next) => {
         .status(401)
         .json({ code: 401, message: '회원정보가 존재하지 않습니다.' });
     }
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+};
+
+exports.kakaoLogin = async (req, res, next) => {
+  const { email, nick, snsId } = req.body;
+
+  try {
+    let exUser = await User.findOne({ snsId: snsId, provider: 'kakao' });
+
+    if (!exUser) {
+      exUser = await User.create({
+        email: email,
+        nick: nick,
+        snsId: snsId,
+        provider: 'kakao',
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        _id: exUser._id,
+        snsId: exUser.snsId,
+        nick: exUser.nick,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '35d',
+      }
+    );
+
+    return res.json({
+      code: 200,
+      message: '토큰이 발급되었습니다.',
+      token,
+    });
   } catch (error) {
     console.log(error);
     return next(error);
