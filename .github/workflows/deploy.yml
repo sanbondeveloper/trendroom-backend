@@ -2,7 +2,7 @@ name: Deploy to cloudtype
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,13 +26,13 @@ jobs:
             options:
               env:
                 - name: NODE_ENV
-                  value: ${{ secrets.NODE_ENV }}
+                  value: production
                 - name: COOKIE_SECRET
-                  value: ${{ secrets.COOKIE_SECRET }}
+                  value: cookiesecret
                 - name: JWT_SECRET
-                  value: ${{ secrets.JWT_SECRET }}
+                  value: jwtSecret
                 - name: MONGO_URI
-                  value: ${{ secrets.MONGO_URI }}
+                  value: mongodb://yordle:1234@localhost:27017/admin
               ports: "3001"
               install: npm ci --production
               start: node app.js
