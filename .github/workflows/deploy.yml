@@ -26,13 +26,13 @@ jobs:
             options:
               env:
                 - name: NODE_ENV
-                  value: ${{ env.NODE_ENV }}
+                  value: ${{ secrets.NODE_ENV }}
                 - name: COOKIE_SECRET
-                  value: ${{ env.COOKIE_SECRET }} 
+                  value: ${{ secrets.COOKIE_SECRET }}
                 - name: JWT_SECRET
-                  value: ${{ env.JWT_SECRET }}
+                  value: ${{ secrets.JWT_SECRET }}
                 - name: MONGO_URI
-                  value: ${{ env.MONGO_URI }}
+                  value: ${{ secrets.MONGO_URI }}
               ports: "3001"
               install: npm ci --production
               start: node app.js
