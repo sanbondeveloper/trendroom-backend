@@ -26,13 +26,13 @@ jobs:
             options:
               env:
                 - name: NODE_ENV
-                  value: production
+                  value: ${{ env.NODE_ENV }}
                 - name: COOKIE_SECRET
-                  value: cookiesecret
+                  value: ${{ env.COOKIE_SECRET }} 
                 - name: JWT_SECRET
-                  value: jwtSecret
+                  value: ${{ env.JWT_SECRET }}
                 - name: MONGO_URI
-                  value: mongodb://yordle:1234@mongo:27017/admin
+                  value: ${{ env.MONGO_URI }}
               ports: "3001"
               install: npm ci --production
               start: node app.js
