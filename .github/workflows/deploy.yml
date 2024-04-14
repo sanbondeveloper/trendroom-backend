@@ -33,6 +33,12 @@ jobs:
                   secret: JWT_SECRET
                 - name: MONGO_URI
                   secret: MONGO_URI
+                - name: KAKAO_CLIENT_ID
+                  secret: KAKAO_CLIENT_ID
+                - name: NAVER_CLIENT_ID
+                  secret: NAVER_CLIENT_ID
+                - name: NAVER_CLIENT_SECRET
+                  secret: NAVER_CLIENT_SECRET
               ports: "3001"
               install: npm ci --production
               start: node app.js

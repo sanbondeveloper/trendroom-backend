@@ -17,7 +17,7 @@ const userSchema = new Schema(
     provider: {
       type: String,
       require: true,
-      enum: ['local', 'kakao', 'apple'],
+      enum: ['local', 'kakao', 'naver'],
       default: 'local',
     },
     snsId: {

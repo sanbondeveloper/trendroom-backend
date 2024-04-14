@@ -4,16 +4,23 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
+const cors = require('cors');
+const fileStore = require('session-file-store')(session);
+const { getUser } = require('./middlewares');
 
+dotenv.config();
 const indexRouter = require('./routes');
 const connect = require('./schemas');
 
-dotenv.config();
 const app = express();
 app.set('port', process.env.PORT || 3001);
 // 몽고디비 연결
 connect();
-
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 // 개발 환경 - dev, 배포 환경 - combined
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
@@ -34,14 +41,16 @@ const sessionOption = {
   cookie: {
     httpOnly: true,
     secure: false, // 배포시 true
+    maxAge: 30 * 24 * 60 * 60 * 1000,
   },
-  name: 'server-session',
+  store: new fileStore(),
 };
 if (process.env.NODE_ENV === 'production') {
   sessionOption.proxy = true;
   sessionOption.cookie.secure = true;
 }
 app.use(session(sessionOption));
+app.use(getUser);
 
 app.use('/api', indexRouter);
 

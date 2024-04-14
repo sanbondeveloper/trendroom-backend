@@ -1,5 +1,38 @@
 const jwt = require('jsonwebtoken');
 
+const User = require('../schemas/user');
+
+exports.getUser = async (req, res, next) => {
+  console.log('cookies', req.cookies);
+  console.log('signedCookies', req.signedCookies);
+  console.log('session', req.session.auth);
+  console.log('sessionID', req.sessionID);
+  console.log('-------------------------------------------------------');
+
+  if (!req.session.userId) return next();
+
+  const exUser = await User.findById(req.session.userId);
+
+  req.user = exUser;
+  next();
+};
+
+exports.isLoggedIn = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.status(403).send('로그인이 필요합니다.');
+  }
+};
+
+exports.isNotLoggedIn = (req, res, next) => {
+  if (!req.user) {
+    next();
+  } else {
+    res.status(403).send('로그인한 상태입니다.');
+  }
+};
+
 exports.verifyToken = (req, res, next) => {
   try {
     res.locals.decoded = jwt.verify(
