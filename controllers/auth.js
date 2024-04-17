@@ -39,10 +39,8 @@ exports.login = async (req, res, next) => {
   try {
     const exUser = await User.findOne({ email });
 
-    console.log(password, exUser.password);
-
     if (exUser) {
-      const result = await bcrypt.compare(password, exUser.password);
+      const result = await bcrypt.compare(password, exUser?.password || null);
 
       if (result) {
         req.session.userId = exUser._id;
