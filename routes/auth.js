@@ -7,6 +7,7 @@ const {
   logout,
   kakaoLogin,
   naverLogin,
+  checkReferralCode,
 } = require('../controllers/auth');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares');
 
@@ -22,10 +23,6 @@ router.post('/kakao', kakaoLogin);
 
 router.post('/naver', naverLogin);
 
-// router.get('/kakao', passport.authenticate('kakao'));
-
-// router.get('/callback/kakao', passport.authenticate('kakao'), (req, res) => {
-//   res.status(200).end();
-// });
+router.get('/referral/:code', checkReferralCode);
 
 module.exports = router;

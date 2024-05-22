@@ -194,3 +194,22 @@ exports.naverLogin = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.checkReferralCode = async (req, res, next) => {
+  const referralCodes = ['ABC123', 'XYZ789', 'REF456'];
+  const referralCode = req.params.code;
+
+  if (referralCodes.includes(referralCode)) {
+    res.status(200).json({
+      code: referralCode,
+      valid: true,
+      message: 'Referral code is valid.',
+    });
+  } else {
+    res.status(404).json({
+      code: referralCode,
+      valid: false,
+      message: 'Referral code is not valid.',
+    });
+  }
+};
