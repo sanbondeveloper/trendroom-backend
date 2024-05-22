@@ -199,6 +199,8 @@ exports.checkReferralCode = async (req, res, next) => {
   const referralCodes = ['1231231', '1231232', '1231233'];
   const referralCode = req.params.code;
 
+  console.log(referralCode);
+
   if (referralCodes.includes(referralCode)) {
     res.status(200).json({
       code: referralCode,

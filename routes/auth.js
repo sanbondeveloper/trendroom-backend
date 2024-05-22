@@ -23,6 +23,6 @@ router.post('/kakao', kakaoLogin);
 
 router.post('/naver', naverLogin);
 
-router.get('/referral/:code', checkReferralCode);
+router.get('/referrer/:code', checkReferralCode);
 
 module.exports = router;
