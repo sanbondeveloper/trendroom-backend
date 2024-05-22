@@ -196,7 +196,7 @@ exports.naverLogin = async (req, res, next) => {
 };
 
 exports.checkReferralCode = async (req, res, next) => {
-  const referralCodes = ['ABC123', 'XYZ789', 'REF456'];
+  const referralCodes = ['1231231', '1231232', '1231233'];
   const referralCode = req.params.code;
 
   if (referralCodes.includes(referralCode)) {
