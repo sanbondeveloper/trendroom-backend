@@ -23,6 +23,10 @@ const userSchema = new Schema(
     snsId: {
       type: String,
     },
+    interests: {
+      type: [Number],
+      default: [],
+    },
   },
   {
     timestamps: true,
